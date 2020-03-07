@@ -424,8 +424,19 @@ void startOrResumeJob() {
     bool did_state = true;
     switch (card.sdprinting_done_state) {
 
-      #if HAS_RESUME_CONTINUE                   // Display "Click to Continue..."
-        case 1:
+      case 1:
+        did_state = print_job_timer.duration() < 60 || queue.enqueue_P(PSTR("M31"));
+        break;
+
+      case 2:
+        print_job_timer.stop();
+        #if ENABLED(LCD_SET_PROGRESS_MANUALLY)
+          ui.set_progress_done();
+        #endif
+        break;
+
+      #if HAS_RESUME_CONTINUE                   // Display "Click to resume..."
+        case 3:
           did_state = queue.enqueue_P(PSTR("M0Q1S"
             #if HAS_LCD_MENU
               "1800"                            // ...for 30 minutes with LCD
@@ -436,23 +447,17 @@ void startOrResumeJob() {
           break;
       #endif
 
-      case 2: print_job_timer.stop(); break;
-
-      case 3:
-        did_state = print_job_timer.duration() < 60 || queue.enqueue_P(PSTR("M31"));
+      case 4:
+        did_state = !queue.has_commands_queued();
         break;
 
-      case 4:
+      case 5:
         #if ENABLED(POWER_LOSS_RECOVERY)
           recovery.purge();
         #endif
 
         #if ENABLED(SD_FINISHED_STEPPERRELEASE) && defined(SD_FINISHED_RELEASECOMMAND)
           planner.finish_and_disable();
-        #endif
-
-        #if ENABLED(LCD_SET_PROGRESS_MANUALLY)
-          ui.set_progress_done();
         #endif
 
         #if ENABLED(SD_REPRINT_LAST_SELECTED_FILE)
