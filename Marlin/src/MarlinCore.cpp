@@ -435,13 +435,6 @@ void startOrResumeJob() {
       #if HAS_RESUME_CONTINUE                   // Display "Click to resume..."
         case 3:                                 // 30 min timeout with LCD, 1 min without
           did_state = queue.enqueue_P(PSTR("M0Q1S" TERN(HAS_LCD_MENU, "1800", "60")));
-          did_state = queue.enqueue_P(PSTR("M0Q1S"
-            #if HAS_LCD_MENU
-              "1800"                            // ...for 30 minutes with LCD
-            #else
-              "60"                              // ...for 1 minute with no LCD
-            #endif
-          ));
           break;
       #endif
 
