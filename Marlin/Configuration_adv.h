@@ -1662,9 +1662,9 @@
  * the probe to be unable to reach any points.
  */
 #if PROBE_SELECTED && !IS_KINEMATIC
-  #define PROBING_MARGIN_LEFT 15
+  #define PROBING_MARGIN_LEFT 18
   #define PROBING_MARGIN_RIGHT 30
-  #define PROBING_MARGIN_FRONT 35
+  #define PROBING_MARGIN_FRONT 40
   #define PROBING_MARGIN_BACK 30
 #endif
 
@@ -2265,7 +2265,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       1200
+    #define Z_CURRENT       1300
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
