@@ -2213,7 +2213,7 @@
 //#define TFT_320x240_SPI
 //#define TFT_480x320
 #define TFT_480x320_SPI
-#define TFT_BUFFER_SIZE 2400
+#define TFT_BUFFER_SIZE 1024
 
 //
 // Skip autodetect and force specific TFT driver
