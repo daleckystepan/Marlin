@@ -44,7 +44,30 @@ void CANVAS::Continue() {
   endLine = TFT_BUFFER_SIZE < width * (height - startLine) ? startLine + TFT_BUFFER_SIZE / width : height;
 }
 
+typedef struct __attribute__((__packed__)) {
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
+} pixel_18bpp;
+
+// bool CANVAS::ToScreen() {
+//   pixel_18bpp final_buf[TFT_BUFFER_SIZE];
+
+//   uint16_t i = 0;
+//   for ( ; i < width * (endLine - startLine); i++) {
+//     //translate 16bpp to 18bpp
+
+//     final_buf[i].r = RED(buffer[i]) << 3;
+//     final_buf[i].g = GREEN(buffer[i]) << 2;
+//     final_buf[i].b = BLUE(buffer[i]) << 3;
+//   }
+
+//   tft.write_sequence((uint16_t*)final_buf, (i * sizeof(pixel_18bpp)) / sizeof(uint16_t));
+//   return endLine == height;
+// }
+
 bool CANVAS::ToScreen() {
+
   tft.write_sequence(buffer, width * (endLine - startLine));
   return endLine == height;
 }
